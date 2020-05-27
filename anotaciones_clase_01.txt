@@ -1,0 +1,28 @@
+dominio = la logica del negocio
+composicion = compongo 2 objetos que representan a uno solo
+WKO = Objeto simple (como en wollok), en java lo mas cercano es el Singleton
+tema herencia = aunque agrega expresividad, agregar una clase que herede y no haga nada
+                complejiza la herencia.
+                Se puede hacer, haciendo que las clases que heredan redefinan 
+                comportamientos! (ver eso en mi codigo para fixear como hizo gaston)
+                
+Sobredisenio = esta bueno poner todo justificado si pongo cosas que pienso que 
+                se pueden agregar a futuro
+               En parciales SOLO PONER SI LO DICE EL ENUNCIADO EN LO POSIBLE,
+               porque probablemente no me alcance el tiempo.
+               
+               
+Tarea:       
+En mi codigo puedo poner un string o un Enum, para la ropa que sea "descripcion"
+para poner si es remera , pantalon, etc
+
+Probar con test papaaaa no con el main
+
+
+
+Notas:
+En la materia vamos a usar excepciones no chequeadas.
+
+Preguntar> 
+Duda del polimorfismo con interfaces para no usar herencia *respondido
+        
