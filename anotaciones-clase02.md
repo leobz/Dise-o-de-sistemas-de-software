@@ -29,8 +29,9 @@ Interfaz de un programa para exponer y que un tercero pueda utlilizar.
 Excepciones: Se propagan automaticamente abortando el flujo del programa. Tienen Stacktrace[donde se genero, pasos que ocurrieron], mensaje y tipo.
 Call and return: La propagacion se tiene que implementar a mano. Implementacion comun en C, se retorna un valor que representa un Error.
 
-### DOminio:
+### Dominio:
 Reglas de negocio, es la logica, no es la parte que que guarda ni la que muestra.
+
 ### Consultar del TP:
 
 

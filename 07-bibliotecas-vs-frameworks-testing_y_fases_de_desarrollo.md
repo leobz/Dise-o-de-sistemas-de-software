@@ -1,4 +1,4 @@
-# Clase 06
+# Clase 07
 
 ## Framework vs Bibliotecas
 
@@ -25,16 +25,18 @@ como llamar a nuestro codigo y ejecutarlo.
 
 Tiene muchos significados segun el punto de vista
 
-* Gestor de Dependencias(mave, npm, etc): Bibliotecas necesarias para el funcionamiento del proyecto
 * En objetos: Todas las cosas que necesita el objeto para funcionar adecuadamente.
 * **Conocimiento directo** (Lo llama el objeto) o **inyectado** (permite parametrizar)
+* * Gestor de Dependencias(mave, npm, etc): Bibliotecas necesarias para el funcionamiento del proyecto
 
 ### Inyeccion de Dependencias
 
-VER  
+Parametrizar las dependencias del objeto. Es decir, en vez de que el objeto la tenga preestablecida, pasarselas por constructor o parametro.
+
+El strategy utiliza inyeccion de dependencias, cada estrategia seria una inyeccion que usamos.
+
 Defino una instancia que se encarga de realizar una accion con un comportamiento
 definido, y la utilizo o la "inyecto", para que haga algo.
-El strategy utiliza inyeccion de dependencias, cada estrategia seria una inyeccion que usamos.
 Ejemplo DependenciaGmail, DependenciaOutlook son tipos de Dependencia Mail que se inyectan al objeto, y todas entienden el metodo ".enviar_mail()".
 Al no ser parametrizable, utiliza polimorfismo para definir el comportamiento
 
