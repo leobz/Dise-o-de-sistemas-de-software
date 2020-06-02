@@ -9,14 +9,9 @@
 7) Eventos
     * 7.1 Interrupciones/Signals
 8) Streams/Pipes
+9) Conclusiones
 
 ## Introducción
-
-Los patrones son eso, patrones. Bien puede pasar que tengamos esquemas mixtos o que se
-puedan interpretar de una u otra forma... por ejemplo las signals del sistema operativo podrían
-pensarse como un mecanismo de excepción o como un evento en distintos contextos... no es
-tan importante encajar nuestra solución en una categorización exacta sino que los patrones
-sirven en la medida en que nos ayudan a pensar.
 
 En este texto, no hablaremos tanto de cuestiones de diseño, sino más bien haremos un tratamiento teórico de distintas formas de comunicar componentes. Y recuerden que cuando
 acá hablemos de componentes en general pondremos ejemplos en objetos, pero que realmente estas ideas aplican a muchas otras tecnologías
@@ -33,14 +28,26 @@ acá hablemos de componentes en general pondremos ejemplos en objetos, pero que 
 
 ## Call and Return
 
-PREGUNTA: ¿CALL AND RETURN está basado en la composición de funciones? Es decir ¿El caller (o llamador) equivaldria a la funcion que toma la salida de la otra (que seria el callee o llamado)?
-
 Se da cuando un componente invocante o llamador (caller) invoca o referencia a un componente llamado (callee). El callee devuelve un valor de retorno al caller, por ende la comunicación será bidireccional (Aunque existen tencologías que no permiten esto y la comunicación es unidireccional)
 
-* El callee puede recibir parámteros que le pasa el caller.
+* El callee puede recibir parámetros que le pasa el caller.
 * El callee no necesita conocer al caller
 * El patron está basado en la composición de funciones CHEQUEAR
 * Inmutabilidad: no se modifican los mensajes, sino que se crean nuevos.
+
+Ejemplo:
+
+```python
+# Función call and return
+def agregar2(numero):
+    return numero + 2
+
+numero = 10
+resultado = agregar2(1)
+
+print(resultado) -> 12  #Llamo a la funcion y retorna. un resultado
+print(numero)    -> 10  #numero no se modificó (inmutabilidad)
+```
 
 ## Memoria compartida (Call by Reference)
 
@@ -85,7 +92,7 @@ Se comunica transmitiendo un mensaje de error, el estado de un objeto o el error
 
 En la programación Continuation-passing style (CPS), las funciones no retornan valores, sino que cada una llamará a otra antes de finalizar, haciendo que el programa sea una conjunción de continuaciones de funciones.
 
-Para esto las funciones CPS necesitan como mínimo dos elementos: una condición para controlar distintos tipos de flujos posibles y una responsabilidad (funcion lambda, método, etc). Ésta responsabilidad, será la futura continuadora del Flujo de Control.
+Para esto las funciones CPS necesitan una responsabilidad siguiente a ejecutar (funcion lambda, método, bloque, etc). Ésta responsabilidad, será la futura continuadora del Flujo de Control.
 
 Ejemplo1:
 
@@ -98,25 +105,26 @@ def divisionCPS(dividendo, divisor, anteExito, anteFalla)
     else:
         anteExito()
 
+# Invoco la función con sus 2 responsabilidades continuadoras
+divisionCPS(1, 2, imprimir(), lanzarExcepcion())
 ```
 
 Ejemplo 2:
+
 ```python
 # Función CPS
-def siEsParHacerAlgo(numero, funcionContinuadora):
+def siEsParHacerAlgo(numero, continuadora):
     if esPar(numero):
-        funcionContinuadora(numero)
+        continuadora(numero)
 
 # Continuadora
-def imprimir(algo):
-    print("Valor: " + algo)
+def imprimir(valor):
+    print("Valor: " + valor)
 
-----
-
-siEsParHacerAlgo(2, imprimir) ->  Valor 2
+siEsParHacerAlgo(2, imprimir) ->  Valor: 2
 ```
 
-PREGUNTA: Qué es el patron command?
+Nota: Este estilo de programación puede ser útil en operaciones asíncronas, cuando quiero que las continuaciones se ejecuten en un hilo paralelo al flujo normal del programa.
 
 ## Eventos
 
@@ -125,6 +133,31 @@ Es una comunicación en la cual existe un productor y un suscriptor. Cuando ocur
 En algunos casos, existe una técnica llamada polling la cual permite al suscriptor no tener que estar chequeando todo el tiempo si hay novedades.
 
 Permite bajar el acomplamiento en los casos en el que el  receptor no conozca al emisor.
+
+Ejemplo
+
+```python
+stream = [0,1,2]
+
+# La función map, en realidad no se ejecutará hasta que
+# suceda un evento. Podría pensarse como un bloque de
+# código que espera a ser llamado(por un evento)
+stream = stream.map(|x| ->  x + 1)
+
+# El stream no se mapeará hasta que ocurra un evento, por
+# eso al momento de imprimir el stream, se ejecutará el map
+while(true)
+    stream.forEach(imprimir)
+
+
+
+Nota: Los streams a diferencia de las listas permiten
+leer elementos de uno en uno y no tener cargalos
+todos en memoria como en las listas.
+
+Esto permite que cuando se agrege un nuevo elemento al stream, el ciclo lo detecte (ocurre un evento) e imprima el nuevo valor.
+
+```
 
 ### Interrupciones/ Signals
 
@@ -160,6 +193,12 @@ Ejemplo:
 ```shell
 $ ps aux | grep conky | grep -v grep | awk '{print $2}' | xargs kill
 ```
+
+## Conclusiones
+
+Los patrones son eso, patrones. Bien puede pasar que tengamos esquemas mixtos o que se puedan interpretar de una u otra forma... por ejemplo las signals del sistema operativo podrían pensarse como un mecanismo de excepción o como un evento en distintos contextos... no es
+tan importante encajar nuestra solución en una categorización exacta sino que los patrones
+sirven en la medida en que nos ayudan a pensar.
 
 ---
 
