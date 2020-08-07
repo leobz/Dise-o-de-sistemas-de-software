@@ -32,21 +32,19 @@ Se da cuando un componente invocante o llamador (caller) invoca o referencia a u
 
 * El callee puede recibir parámetros que le pasa el caller.
 * El callee no necesita conocer al caller
-* El patron está basado en la composición de funciones CHEQUEAR
 * Inmutabilidad: no se modifican los mensajes, sino que se crean nuevos.
 
 Ejemplo:
 
 ```python
 # Función call and return
-def agregar2(numero):
-    return numero + 2
+def duplicar(numero):             -> duplicar: Función Invocadora o Caller
+    return sumar(numero, numero)  -> sumar: Función que fue 'Llamada' por la Invocadora
 
-numero = 10
-resultado = agregar2(1)
+diez = 10
 
-print(resultado) -> 12  #Llamo a la funcion y retorna. un resultado
-print(numero)    -> 10  #numero no se modificó (inmutabilidad)
+print(duplicar(diez)) -> 12  # Llamo a la funcion y retorna un resultado
+print(diez)           -> 10  # La variable 'diez' no se modificó (inmutabilidad)
 ```
 
 ## Memoria compartida (Call by Reference)
