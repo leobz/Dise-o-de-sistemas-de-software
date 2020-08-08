@@ -58,14 +58,14 @@ El scope de la variable compartida puede ser global o localizada. Ejemplos:
 * Variables globales: Podrían ser varias pilas que compartan un mismo index global. Esto sería un problema ya que al modificar una pila, afectaremos a todas las demas.
 
 ```python
-index = 0
+indice = 0    -> variable compartida global
 
 class Pila:
     def push(valor):
-        index ++
-        valores[index] = valor
+        indice ++  -> modificación global
+        valores[indice] = valor
 
-# Al crearse dos pilas, si hago un push en una afecto a la otra (ya que todas usan el mismo index)
+# Al crearse dos pilas, si hago un push en una afecto a la otra, ya que todas usan el mismo índice
 ```
 
 * Variables localizadas: Podrian ser las variables de clase, que son accedidas y modificadas por cualquier instancia de una clase.
@@ -135,25 +135,18 @@ Permite bajar el acomplamiento en los casos en el que el  receptor no conozca al
 Ejemplo
 
 ```python
+
+# La función map: Esta función, no se ejecuta hasta que un evento sucede.
+# Por eso, podría pensarse como un bloque de código que espera a ser ejecutado al ocurrir un evento.
+
 stream = [0,1,2]
+stream = stream.map(|x| ->  x + 1)        -> map se no se ejecuta acá
 
-# La función map, en realidad no se ejecutará hasta que
-# suceda un evento. Podría pensarse como un bloque de
-# código que espera a ser llamado(por un evento)
-stream = stream.map(|x| ->  x + 1)
-
-# El stream no se mapeará hasta que ocurra un evento, por
-# eso al momento de imprimir el stream, se ejecutará el map
 while(true)
-    stream.forEach(imprimir)
+    stream.forEach(imprimir)              -> al momento de imprimir, se detecta un evento y se ejecuta el map sobre el stream
 
-
-
-Nota: Los streams a diferencia de las listas permiten
-leer elementos de uno en uno y no tener cargalos
-todos en memoria como en las listas.
-
-Esto permite que cuando se agrege un nuevo elemento al stream, el ciclo lo detecte (ocurre un evento) e imprima el nuevo valor.
+Offtopic: 
+Los streams a diferencia de las listas permiten cargar los elementos a memoria de uno en uno y no todos al mismo tiempo.
 
 ```
 
